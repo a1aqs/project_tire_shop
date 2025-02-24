@@ -64,16 +64,6 @@ pool.query('SELECT * FROM appointments', (err, result) => {
     if (err) console.error(err);
     else console.log(result.rows);
   });
-  
-
-  pool.query(
-    "INSERT INTO appointments (name, phone, date, service) VALUES ('Тест', '1234567890', '2025-02-25', 'Балансировка') RETURNING *",
-    (err, result) => {
-      if (err) console.error(err);
-      else console.log("Добавлена запись:", result.rows);
-    }
-  );   
-  
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
