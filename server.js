@@ -72,7 +72,7 @@ pool.query('SELECT * FROM appointments', (err, result) => {
       if (err) console.error(err);
       else console.log("Добавлена запись:", result.rows);
     }
-  );  
+  );   
   
 
 const PORT = process.env.PORT || 5001;
