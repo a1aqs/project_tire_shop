@@ -1,12 +1,13 @@
 import React from "react";
 import AppointmentForm from "./components/AppointmentForm";
+import { CssBaseline } from "@mui/material";
 
 function App() {
   return (
-    <div>
-      <h1>Запись на шиномонтаж</h1>
+    <>
+      <CssBaseline />
       <AppointmentForm />
-    </div>
+    </>
   );
 }
 
