@@ -1,46 +1,93 @@
-import { useState } from "react";
-import axios from "axios";
-import { TextField, Button, MenuItem, Container, Typography, Paper, Box, Alert } from "@mui/material";
+import React from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import MenuItem from "@mui/material/MenuItem";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Container from "@mui/material/Container";
+import "./AppointmentForm.css"; // Добавь импорт стилей
 
 const AppointmentForm = () => {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [date, setDate] = useState("");
-  const [service, setService] = useState("Замена шин");
-  const [message, setMessage] = useState(null); // Для отображения результата
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage(null);
-
-    try {
-      const response = await axios.post("http://localhost:5001/api/appointments", {
-        name,
-        phone,
-        date,
-        service,
-      });
-
-      if (response.status === 201) {
-        setMessage({ type: "success", text: "Запись успешно создана!" });
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      phone: "",
+      date: "",
+      service: "",
+    },
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .min(2, "Имя слишком короткое")
+        .max(50, "Имя слишком длинное")
+        .required("Обязательное поле"),
+      phone: Yup.string()
+        .matches(/^(\+7|8)?\d{10}$/, "Некорректный номер")
+        .required("Обязательное поле"),
+      date: Yup.date()
+        .min(new Date(), "Дата не может быть в прошлом")
+        .required("Выберите дату"),
+      service: Yup.string().required("Выберите услугу"),
+    }),
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        alert("Запись успешно отправлена!");
+        resetForm();
+      } catch (error) {
+        alert("Ошибка отправки");
       }
-    } catch (error) {
-      setMessage({ type: "error", text: "Ошибка при записи. Попробуйте снова." });
-    }
-  };
+    },
+  });
 
   return (
-    <Container maxWidth="sm">
-      <Paper elevation={3} sx={{ padding: 3, marginTop: 4 }}>
-        <Typography variant="h5" gutterBottom align="center">
-          Запись на шиномонтаж
-        </Typography>
-        {message && <Alert severity={message.type}>{message.text}</Alert>}
-        <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          <TextField label="Имя" variant="outlined" fullWidth value={name} onChange={(e) => setName(e.target.value)} required />
-          <TextField label="Телефон" variant="outlined" fullWidth value={phone} onChange={(e) => setPhone(e.target.value)} required />
-          <TextField label="Дата и время" type="datetime-local" InputLabelProps={{ shrink: true }} fullWidth value={date} onChange={(e) => setDate(e.target.value)} required />
-          <TextField label="Услуга" select fullWidth value={service} onChange={(e) => setService(e.target.value)} required>
+    <Container className="form-container">
+      <Paper elevation={3} className="form-paper">
+        <Box component="form" onSubmit={formik.handleSubmit} className="form-box">
+          <h2>Запись на шиномонтаж</h2>
+          <TextField
+            label="Имя"
+            name="name"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.name && Boolean(formik.errors.name)}
+            helperText={formik.touched.name && formik.errors.name}
+            fullWidth
+          />
+          <TextField
+            label="Телефон"
+            name="phone"
+            value={formik.values.phone}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.phone && Boolean(formik.errors.phone)}
+            helperText={formik.touched.phone && formik.errors.phone}
+            fullWidth
+          />
+          <TextField
+            label="Дата"
+            type="date"
+            name="date"
+            InputLabelProps={{ shrink: true }}
+            value={formik.values.date}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.date && Boolean(formik.errors.date)}
+            helperText={formik.touched.date && formik.errors.date}
+            fullWidth
+          />
+          <TextField
+            label="Услуга"
+            name="service"
+            select
+            value={formik.values.service}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.service && Boolean(formik.errors.service)}
+            helperText={formik.touched.service && formik.errors.service}
+            fullWidth
+          >
             <MenuItem value="Замена шин">Замена шин</MenuItem>
             <MenuItem value="Балансировка">Балансировка</MenuItem>
             <MenuItem value="Ремонт прокола">Ремонт прокола</MenuItem>

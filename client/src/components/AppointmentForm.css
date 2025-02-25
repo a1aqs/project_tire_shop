@@ -1,0 +1,36 @@
+body {
+    background: url("https://avatars.mds.yandex.net/get-sprav-products/5514775/2a00000183f43ec618d30f24567b8f80587d/M_height") no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .form-paper {
+    padding: 30px;
+    width: 400px;
+    background: rgba(255, 255, 255, 0.85); /* Полупрозрачный фон */
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .form-box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  

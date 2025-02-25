@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@2gis/mapgl": "^1.56.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.5",
@@ -12,8 +13,10 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.9",
+    "formik": "^2.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-input-mask": "^2.0.4",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
