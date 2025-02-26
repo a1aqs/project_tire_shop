@@ -1,5 +1,5 @@
 body {
-    background: url("https://avatars.mds.yandex.net/get-sprav-products/5514775/2a00000183f43ec618d30f24567b8f80587d/M_height") no-repeat center center fixed;
+    background-color: rgba(17, 17, 17, 0.3);
     background-size: cover;
     display: flex;
     justify-content: center;
@@ -33,4 +33,3 @@ body {
     text-align: center;
     margin-bottom: 10px;
   }
-  

@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { TextField, Button, MenuItem, Container, Typography, Paper, Box, Alert } from "@mui/material";
+import "./App.css";
 
 const AppointmentForm = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState("");
   const [service, setService] = useState("Замена шин");
-  const [message, setMessage] = useState(null); // Для отображения результата
+  const [message, setMessage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,8 +51,51 @@ const AppointmentForm = () => {
           </Button>
         </Box>
       </Paper>
+      
+      {/* Google Map */}
+      <Paper elevation={3} sx={{ padding: 3, marginTop: 4 }}>
+        <Typography variant="h6" gutterBottom align="center">
+          Наше местоположение
+        </Typography>
+        <Map />
+      </Paper>
     </Container>
   );
+};
+
+// Компонент карты Google с исправленными координатами ОмГУ (Проспект Мира, 55а)
+const Map = () => {
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    const loadMap = () => {
+      if (!window.google) return;
+
+      const map = new window.google.maps.Map(mapRef.current, {
+        center: { lat: 55.0283, lng: 73.26501 }, // Координаты Проспект Мира, 55а
+        zoom: 17,
+      });
+
+      new window.google.maps.Marker({
+        position: { lat: 55.0283, lng: 73.26501 },
+        map,
+        title: "ОмГУ, Проспект Мира, 55а",
+      });
+    };
+
+    if (!window.google) {
+      const script = document.createElement("script");
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBnl8jcu06JSx7kYvqH9qgnBO5Dbv0SnZ8&callback=initMap`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+      script.onload = () => loadMap();
+    } else {
+      loadMap();
+    }
+  }, []);
+
+  return <div ref={mapRef} style={{ width: "100%", height: "400px", marginTop: "20px" }} />;
 };
 
 export default AppointmentForm;
