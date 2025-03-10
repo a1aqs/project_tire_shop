@@ -72,7 +72,7 @@ const Map = () => {
       if (!window.google) return;
 
       const map = new window.google.maps.Map(mapRef.current, {
-        center: { lat: 55.0283, lng: 73.26501 }, // Координаты Проспект Мира, 55а
+        center: { lat: 55.0283, lng: 73.26501 }, // Кординаты Проспект Мира, 55а
         zoom: 17,
       });
 

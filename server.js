@@ -8,7 +8,7 @@ app.use(express.json()); // Для обработки JSON-запросов
 
 const PORT = 5001;
 const TELEGRAM_BOT_TOKEN = '7710346622:AAG3tbWUX_0SyqMggZkYKnkNWWQOU-vefEI';
-const TELEGRAM_CHAT_ID = '1060354132';
+const TELEGRAM_CHAT_ID = '1060354132';  
 
 let appointments = []; // Хранилище записей
 
